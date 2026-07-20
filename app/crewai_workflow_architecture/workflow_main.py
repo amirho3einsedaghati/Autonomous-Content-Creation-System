@@ -94,29 +94,34 @@ class ContentRouterFlow(Flow[ContentState]):
 if __name__ == "__main__":
     flow = ContentRouterFlow()
 
-    # pass user inputs to the flow via kickoff(inputs=...). 
-    # CrewAI automatically maps those inputs into your flow state
-    # (when the keys match your state fields).
-    url = "https://www.ibm.com/think/topics/agentic-ai"
-    content_type = "blog"
-    result = flow.kickoff(
-        inputs={
-            "url": url,
-            "content_type": content_type
-        }
-    )  
-    
-    # # If you're building a CLI, gather the input before calling kickoff()
-    # # because it cleanly separates input collection from workflow execution
-    # # and makes your flow reusable from a CLI, web app, or API.
-    # url = input("URL: ")
-    # content_type = input("Content type (blog/newsletter/linkedin): ")
+    # # pass user inputs to the flow via kickoff(inputs=...). 
+    # # CrewAI automatically maps those inputs into your flow state
+    # # (when the keys match your state fields).
+    # url = "https://www.ibm.com/think/topics/agentic-ai"
+    # content_type = "blog"
     # result = flow.kickoff(
     #     inputs={
     #         "url": url,
     #         "content_type": content_type
     #     }
-    # ) 
+    # )  
+    
+    # If you're building a CLI, gather the input before calling kickoff()
+    # because it cleanly separates input collection from workflow execution
+    # and makes your flow reusable from a CLI, web app, or API.
+    root_path = input("Root Path: ").strip()
+    url = input("URL: ").strip()
+    while True:
+        content_type = input("Content Type (blog/newsletter/linkedin): ").lower().strip()
+        if content_type in ["blog", "newsletter", "linkedin"]:
+            break
+            
+    result = flow.kickoff(
+        inputs={
+            "url": url,
+            "content_type": content_type
+        }
+    ) 
 
     print(Markdown("## 📝 Generated Content").data)
     print(Markdown("---").data)
@@ -125,7 +130,8 @@ if __name__ == "__main__":
     md_data = Markdown(content).data
     print(md_data)
 
-    file_path = f"/content/drive/MyDrive/Autonomous-Content-Creation-System/results/{content_type}"
+    
+    file_path = root_path + f"/results/{content_type}"
     os.makedirs(file_path, exist_ok=True)
 
     datetime_utc = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
