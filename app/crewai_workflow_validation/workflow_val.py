@@ -103,4 +103,4 @@ if __name__ == "__main__":
     print(Markdown("## Flow State Summary").data)
     print(Markdown(f"URL: {flow.state.url}").data)
     print(Markdown(f"Content Type: {flow.state.content_type}").data)
-    print(Markdown(f"Final Content Length: {len(str(flow.state.final_content)).data} characters"))
+    print(Markdown(f"Final Content Length: {len(str(flow.state.final_content))} characters").data)
