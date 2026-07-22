@@ -4,7 +4,7 @@ nest_asyncio.apply()
 from crewai.tools import tool
 
 
-# Local "knowledge base" (no web used for demonstration purposes)
+# Local "knowledge base" (no web used for validation purposes)
 
 PRELOADED_TEXT = """
 PwC Choses CrewAI to Help Power Their Global Agent OS
@@ -87,11 +87,11 @@ def _filter_text(query: str, corpus: str) -> str:
     terms = {t.lower() for t in query.split() if len(t) >= 3}
     if not terms:
         return corpus
-    paras = [p.strip() for p in corpus.split("\n\n") if p.strip()]
+    paras = [p.strip() for p in corpus.split("\n\n") if p.strip()] # paragraphs
     hits = [p for p in paras if any(t in p.lower() for t in terms)]
     return "\n\n".join(hits) if hits else corpus
 
 @tool("Knowledge Base Search")
 def search_tool(query: str) -> str:
-    """Returns ONLY text from PRELOADED_TEXT (strictly no web)."""
+    """A Knowledge Base Search tool returns ONLY text from PRELOADED_TEXT (strictly no web)."""
     return _filter_text(query, PRELOADED_TEXT)
