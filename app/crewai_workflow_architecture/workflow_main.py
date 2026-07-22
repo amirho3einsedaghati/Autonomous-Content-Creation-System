@@ -5,7 +5,7 @@ from crewai.flow.flow import Flow, listen, router, start
 from crewai.flow.persistence import persist
 from crewai import Crew
 from app.memory import ContentState
-from app.tasks import (create_blog_tasks,
+from app.crewai_workflow_architecture.tasks import (create_blog_tasks,
     create_newsletter_tasks,
     create_linkedin_tasks)
 from app.crewai_workflow_architecture.agents import (create_blog_agents,
