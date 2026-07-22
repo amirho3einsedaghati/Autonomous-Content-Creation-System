@@ -3,7 +3,11 @@ from pydantic import BaseModel
 
 
 class ContentState(BaseModel):
-    url: str = ""            # Provided by user (used as a query string; no network calls)
+    # User Inputs
+    url: str = ""            # used as a query string
     content_type: str = ""   # "blog" | "newsletter" | "linkedin"
-    final_content: str = ""  # Final generated content
+    
+    # Final generated content
+    final_content: str = ""  
+
     metadata: Dict[str, Any] = {}
