@@ -30,6 +30,7 @@ def create_newsletter_tasks(researcher: Agent, writer: Agent, url: str):
     )
     return [research_task, writing_task]
 
+
 def create_blog_tasks(researcher: Agent, writer: Agent, url: str):
     r = Task(
         description=f'Use ONLY Knowledge Base Search to extract blog-ready insights about "{url}".',
@@ -44,6 +45,7 @@ def create_blog_tasks(researcher: Agent, writer: Agent, url: str):
     )
     return [r, w]
 
+
 def create_linkedin_tasks(researcher: Agent, writer: Agent, url: str):
     r = Task(
         description=f'Use ONLY Knowledge Base Search to pull punchy insights about "{url}".',
@@ -56,4 +58,4 @@ def create_linkedin_tasks(researcher: Agent, writer: Agent, url: str):
         agent=writer,
         context=[r],
     )
-    return [r, w]  
+    return [r, w]

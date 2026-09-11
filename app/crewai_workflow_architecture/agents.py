@@ -1,23 +1,23 @@
 import os
-from crewai import LLM, Agent, Crew
-from crewai.flow.flow import Flow, listen, router, start
-from crewai.flow.persistence import persist
+from crewai import LLM, Agent
+
 from app.crewai_workflow_architecture.tools import search_tool
 
 AGENT_LLM = LLM(
     base_url="https://openrouter.ai/api/v1",
     api_key=os.environ.get("OPENROUTER_API_KEY"),
     model="openrouter/cohere/north-mini-code:free",
-    temperature=0.7
+    temperature=0.7,
 )
+
 
 def create_newsletter_agents():
     researcher = Agent(
         role="Newsletter Content Researcher",
         goal="Extract key insights from web content for newsletter format",
         backstory="""You are an expert at identifying the most newsworthy and actionable
-        insights from web content. You understand what makes content valuable for newsletter
-        subscribers and how to present information concisely.""",
+        insights from web content. You understand what makes content valuable for
+        newsletter subscribers and how to present information concisely.""",
         llm=AGENT_LLM,
         tools=[search_tool],
         max_iter=3,
@@ -26,13 +26,14 @@ def create_newsletter_agents():
     writer = Agent(
         role="Newsletter Writer",
         goal="Create engaging newsletter content that provides immediate value",
-        backstory="""You are a newsletter specialist who knows how to craft content that
-        busy professionals want to read. You excel at creating scannable, actionable content
-        with clear takeaways.""",
+        backstory="""You are a newsletter specialist who knows how to craft content
+        that busy professionals want to read. You excel at creating scannable,
+        actionable content with clear takeaways.""",
         llm=AGENT_LLM,
-        verbose=False
+        verbose=False,
     )
     return researcher, writer
+
 
 def create_blog_agents():
     researcher = Agent(
@@ -44,18 +45,19 @@ def create_blog_agents():
         llm=AGENT_LLM,
         tools=[search_tool],
         verbose=False,
-        max_iter=3
+        max_iter=3,
     )
     writer = Agent(
         role="Blog Content Writer",
         goal="Transform research into engaging, well-structured blog posts",
-        backstory="""You are a skilled blog writer with expertise in creating compelling content
-        that engages readers and drives meaningful discussions. You excel at taking complex
-        information and making it accessible and interesting.""",
+        backstory="""You are a skilled blog writer with expertise in creating compelling
+        content that engages readers and drives meaningful discussions. You excel at taking
+        complex information and making it accessible and interesting.""",
         llm=AGENT_LLM,
         verbose=False,
     )
     return researcher, writer
+
 
 def create_linkedin_agents():
     researcher = Agent(
@@ -67,14 +69,14 @@ def create_linkedin_agents():
         llm=AGENT_LLM,
         tools=[search_tool],
         verbose=False,
-        max_iter=3
+        max_iter=3,
     )
     writer = Agent(
         role="LinkedIn Content Writer",
         goal="Create engaging LinkedIn posts that drive professional engagement",
         backstory="""You are a LinkedIn content specialist who knows how to craft posts
-        that get noticed in the professional feed. You excel at creating content that
-        sparks meaningful professional discussions.""",
-        llm=AGENT_LLM
+        that get noticed in the professional feed. You excel at creating content
+        that sparks meaningful professional discussions.""",
+        llm=AGENT_LLM,
     )
-    return researcher, writer  
+    return researcher, writer

@@ -38,6 +38,7 @@ def create_newsletter_tasks(researcher: Agent, writer: Agent, url: str):
     )
     return [research_task, writing_task]
 
+
 def create_blog_tasks(researcher: Agent, writer: Agent, url: str):
     r = Task(
         description=f"""
@@ -72,9 +73,10 @@ def create_blog_tasks(researcher: Agent, writer: Agent, url: str):
         """,
         expected_output="A complete, well-structured blog post in markdown format",
         agent=writer,
-        context=[r], # integrate research findings as aditional context
+        context=[r],  # integrate research findings as aditional context
     )
     return [r, w]
+
 
 def create_linkedin_tasks(researcher: Agent, writer: Agent, url: str):
     r = Task(
@@ -104,4 +106,4 @@ def create_linkedin_tasks(researcher: Agent, writer: Agent, url: str):
         agent=writer,
         context=[r],
     )
-    return [r, w]  
+    return [r, w]
