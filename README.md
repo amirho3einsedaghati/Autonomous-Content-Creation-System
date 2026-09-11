@@ -1,6 +1,6 @@
 # Autonomous Content Creation System
 
-![Architecture Overview](https://via.placeholder.com/800x400/3366cc/ffffff?text=Autonomous+Content+Creation+Architecture)
+![Architecture Overview](docs/images/agent_diagram.jpg)
 
 Built a series of specialized agents, one for each role that we wanted to have in our team. This system demonstrates a sophisticated autonomous content creation framework using CrewAI, featuring event-driven architecture, state management, and specialized agents for different content formats.
 
