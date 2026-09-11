@@ -1,11 +1,10 @@
-from crewai import Task, Agent, Crew
-from crewai.flow.flow import Flow, listen, router, start
-from crewai.flow.persistence import persist
+from crewai import Agent
 from app.crewai_workflow_validation.tools import search_tool
 
 
 class LocalAgent(Agent):
     """Agent that never calls an LLM; it returns deterministic text."""
+
     def __init__(self, *args, mode: str, **kwargs):
         kwargs.setdefault("llm", None)
         kwargs.setdefault("verbose", False)
@@ -14,12 +13,15 @@ class LocalAgent(Agent):
 
     def execute_task(self, task, context=None, tools=None) -> str:
         import re
+
         m = re.search(r'"([^"]+)"', task.description or "")
         query = m.group(1) if m else ""
 
         if self._mode == "research":
             # Use the local tool directly (no LLM/tool-calls)
-            _ = search_tool.func(query)  # not used further; just demonstrating local-only fetch
+            _ = search_tool.func(
+                query
+            )  # not used further; just demonstrating local-only fetch
             return (
                 "- PwC launched Agent OS with CrewAI at its core.\n"
                 "- Reported 700%+ internal process accuracy gains.\n"
@@ -46,6 +48,7 @@ class LocalAgent(Agent):
             "**Try this:** Pick one workflow, run a two-sprint pilot on Agent OS, and track time-to-value and accuracy deltas."
         )
 
+
 def create_newsletter_agents():
     researcher = LocalAgent(
         role="Newsletter Content Researcher",
@@ -60,6 +63,7 @@ def create_newsletter_agents():
         mode="write",
     )
     return researcher, writer
+
 
 def create_blog_agents():
     researcher = LocalAgent(
@@ -76,6 +80,7 @@ def create_blog_agents():
     )
     return researcher, writer
 
+
 def create_linkedin_agents():
     researcher = LocalAgent(
         role="LinkedIn Researcher",
@@ -89,4 +94,4 @@ def create_linkedin_agents():
         backstory="Concise, professional.",
         mode="write",
     )
-    return researcher, writer  
+    return researcher, writer

@@ -1,8 +1,7 @@
-import nest_asyncio
-nest_asyncio.apply()
-
 from crewai.tools import tool
+import nest_asyncio
 
+nest_asyncio.apply()
 
 # Local "knowledge base" (no web used for validation purposes)
 
@@ -81,15 +80,19 @@ The future of work will be built on agents.
 CrewAI and PwC are scaling agents for the Enterprise.
 """.strip()
 
+
 def _filter_text(query: str, corpus: str) -> str:
     if not query:
         return corpus
     terms = {t.lower() for t in query.split() if len(t) >= 3}
     if not terms:
         return corpus
-    paras = [p.strip() for p in corpus.split("\n\n") if p.strip()] # paragraphs
+    paras = [
+        p.strip() for p in corpus.split("\n\n") if p.strip()
+    ]  # paragraphs
     hits = [p for p in paras if any(t in p.lower() for t in terms)]
     return "\n\n".join(hits) if hits else corpus
+
 
 @tool("Knowledge Base Search")
 def search_tool(query: str) -> str:
